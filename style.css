@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #242925;
+  background: #e8e2d3;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.page {
+  max-width: 1450px;
+  margin: auto;
+  padding: 0 clamp(18px, 4vw, 62px);
+}
+
+.topbar {
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #242925;
+}
+
+.brand {
+  font: 700 1.27rem/1 Arial, Helvetica, sans-serif;
+  letter-spacing: -.055em;
+  text-decoration: none;
+  color: #242925;
+}
+.brand-mark { color: #a44431; font-size: 1.38rem; margin-right: 8px; vertical-align: -1px; }
+.brand-period { color: #a44431; }
+.edition, .eyebrow, .universe-top, .universe-bottom, footer, .word-form label, .input-note, .dialog-kicker {
+  font-family: 'DM Mono', Consolas, monospace;
+}
+.edition { font-size: .76rem; letter-spacing: .035em; }
+.edition-divider { padding: 0 14px; color: #a44431; }
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(330px, .8fr);
+  grid-template-rows: auto auto auto;
+  column-gap: 5%;
+  padding: 48px 0 54px;
+}
+.eyebrow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 28px;
+  font-size: .78rem;
+  letter-spacing: .025em;
+}
+.eyebrow span { color: #a44431; }
+.eyebrow i { width: 30px; height: 1px; background: #a44431; }
+h1 {
+  grid-column: 1;
+  margin: 0;
+  font: 400 clamp(2.85rem, 5.3vw, 5.75rem)/1.12 'Libre Baskerville', Georgia, serif;
+  letter-spacing: -.065em;
+}
+h1 em { font-weight: 400; color: #a44431; }
+.lede {
+  grid-column: 1;
+  max-width: 510px;
+  margin: 20px 0 0;
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+
+.word-form {
+  grid-column: 2;
+  grid-row: 2 / 4;
+  align-self: end;
+  position: relative;
+  border-top: 1px solid #242925;
+  padding-top: 19px;
+  margin-bottom: 2px;
+}
+.word-form:before {
+  content: '↗';
+  position: absolute;
+  top: -27px;
+  right: 0;
+  font: 2.1rem Georgia, serif;
+  color: #a44431;
+}
+.word-form label { display: block; margin-bottom: 11px; font-size: .76rem; letter-spacing: .04em; }
+.input-row { display: flex; min-height: 54px; border: 1px solid #242925; }
+.input-row:focus-within { outline: 2px solid #a44431; outline-offset: 3px; }
+.input-row input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  padding: 0 13px;
+  color: #242925;
+  background: #f4f0e7;
+  font-size: 1rem;
+}
+.input-row input::placeholder { color: #827f74; }
+.input-row button {
+  border: 0;
+  border-left: 1px solid #242925;
+  padding: 0 16px;
+  color: #f4f0e7;
+  background: #242925;
+  font: 500 .76rem 'DM Mono', Consolas, monospace;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.input-row button:hover { background: #a44431; }
+.input-row button span { margin-left: 8px; font-size: 1rem; }
+.input-note { margin: 11px 0 0; color: #565a52; font-size: .72rem; line-height: 1.5; }
+
+.universe {
+  border: 1px solid #242925;
+  background: #f1eddf;
+}
+.universe-top, .universe-bottom {
+  min-height: 51px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 18px;
+  font-size: .76rem;
+}
+.universe-top { border-bottom: 1px solid #242925; }
+.universe-bottom { border-top: 1px solid #242925; }
+.universe-top > span:first-child { display: flex; align-items: center; gap: 11px; }
+.live-star { font-size: 1rem; color: #a44431; }
+.universe-title { font-weight: 500; }
+#word-count { text-transform: uppercase; }
+
+.sky {
+  position: relative;
+  height: min(50vw, 560px);
+  min-height: 410px;
+  overflow: hidden;
+  background-color: #f1eddf;
+  background-image: linear-gradient(#24292512 1px, transparent 1px), linear-gradient(90deg, #24292512 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+.sky:before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  inset: 30px;
+  border: 1px solid #24292520;
+  border-radius: 50%;
+}
+.sky:after {
+  content: '+';
+  position: absolute;
+  top: 13px;
+  left: 17px;
+  font: 1.1rem 'DM Mono', monospace;
+  color: #a44431;
+}
+.connections { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.connections line { stroke: #788074; stroke-opacity: .52; stroke-width: 1; stroke-dasharray: 2 4; }
+.star-word {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: #f1eddfed;
+  color: #242925;
+  padding: 4px 7px;
+  font: 500 clamp(.76rem, 1.1vw, .91rem) 'DM Mono', Consolas, monospace;
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+.star-word:before { content: '●'; color: #a44431; font-size: .53rem; margin-right: 7px; vertical-align: 2px; }
+.star-word:hover, .star-word:focus-visible { color: #f1eddf; background: #a44431; outline: 0; }
+.star-word:hover:before, .star-word:focus-visible:before { color: #f1eddf; }
+.star-word.featured { font: italic 400 clamp(1.25rem, 2vw, 1.9rem) 'Libre Baskerville', Georgia, serif; color: #a44431; }
+.star-word.featured:hover, .star-word.featured:focus-visible { color: #f1eddf; }
+.star-word.featured:before { font-size: .68rem; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; color: #565a52; }
+.pager { display: flex; height: 51px; margin-right: -18px; }
+.pager button { width: 51px; border: 0; border-left: 1px solid #242925; background: transparent; color: #242925; font-size: 1.15rem; }
+.pager button:hover:not(:disabled) { background: #d8d1bd; }
+.pager button:disabled { opacity: .28; cursor: default; }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 23px 0 30px;
+  font-size: .71rem;
+  letter-spacing: .03em;
+}
+footer a { color: #242925; text-decoration: none; border-bottom: 1px solid #242925; }
+footer a:hover { color: #a44431; border-color: #a44431; }
+
+.word-dialog {
+  min-width: min(360px, 90vw);
+  border: 1px solid #242925;
+  border-radius: 0;
+  padding: 36px 40px;
+  background: #f1eddf;
+  color: #242925;
+  text-align: center;
+  box-shadow: 14px 14px 0 #242925;
+}
+.word-dialog::backdrop { background: #242925a8; }
+.word-dialog form { position: relative; }
+.word-dialog .close { position: absolute; top: -29px; right: -28px; border: 0; background: transparent; font-size: 1.8rem; }
+.dialog-kicker { margin: 0; font-size: .72rem; letter-spacing: .08em; }
+.word-dialog h2 { margin: 26px 0; color: #a44431; font: italic 400 2.6rem 'Libre Baskerville', Georgia, serif; }
+.word-dialog p:last-child { margin-bottom: 0; }
+a:focus-visible, button:focus-visible { outline: 2px solid #a44431; outline-offset: 3px; }
+
+@media (max-width: 950px) {
+  .intro { display: block; padding: 42px 0 44px; }
+  .eyebrow { margin-bottom: 25px; }
+  h1 { font-size: clamp(2.9rem, 7vw, 4.9rem); }
+  .lede { margin: 22px 0 32px; }
+  .word-form { max-width: 570px; margin-top: 42px; }
+  .sky { height: 500px; }
+}
+@media (max-width: 600px) {
+  .topbar { min-height: 68px; }
+  .edition { display: none; }
+  .intro { padding: 34px 0 36px; }
+  .eyebrow { gap: 8px; font-size: .66rem; }
+  .eyebrow i { width: 18px; }
+  h1 { font-size: clamp(2.55rem, 11vw, 3.9rem); }
+  .lede { font-size: 1rem; }
+  .word-form { margin-top: 49px; }
+  .input-row { display: block; border: 0; }
+  .input-row:focus-within { outline: 0; }
+  .input-row input { display: block; width: 100%; height: 52px; border: 1px solid #242925; }
+  .input-row input:focus { outline: 2px solid #a44431; outline-offset: 2px; }
+  .input-row button { width: 100%; height: 49px; margin-top: 8px; border: 0; }
+  .universe-top, .universe-bottom { padding: 0 11px; font-size: .65rem; }
+  .universe-top > span:first-child { gap: 6px; }
+  .sky { height: 520px; min-height: 0; }
+  .sky:before { inset: 15px; }
+  .star-word { font-size: .73rem; }
+  .star-word.featured { font-size: 1.25rem; }
+  .pager { margin-right: -11px; }
+  .pager button { width: 45px; }
+  footer { flex-wrap: wrap; gap: 12px; font-size: .62rem; }
+}

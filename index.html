@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e8e2d3">
+  <meta name="description" content="A growing constellation of words left by strangers.">
+  <title>Afterwords — leave one word behind</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e8e2d3'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23242925' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23a44431'/%3E%3Cpath d='M32 4v16M32 44v16M4 32h16M44 32h16' stroke='%23242925' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Afterwords home"><span class="brand-mark" aria-hidden="true">✳</span> AFTERWORDS<span class="brand-period">.</span></a>
+      <span class="edition">A PUBLIC NOTEBOOK <span class="edition-divider">/</span> EST. 2026</span>
+    </header>
+
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">FIELD NOTE <span>001</span> <i></i> AN OPEN COLLECTION</p>
+      <h1 id="title">What’s one word<br><em>you’d leave here?</em></h1>
+      <p class="lede">A growing map of words people chose to keep. Select one to see when it arrived. Add yours when you’re ready.</p>
+      <form id="word-form" class="word-form">
+        <label for="word-input">01 / WRITE ONE WORD</label>
+        <div class="input-row">
+          <input id="word-input" name="word" type="text" minlength="2" maxlength="18" pattern="[^\s]+" autocomplete="off" placeholder="Your word here" required aria-describedby="word-note">
+          <button type="submit">ADD TO THE MAP <span aria-hidden="true">↗</span></button>
+        </div>
+        <p id="word-note" class="input-note">One word, 2–18 letters. You’ll finish on GitHub; words appear after approval.</p>
+      </form>
+    </section>
+
+    <section class="universe" aria-label="Constellation of submitted words">
+      <div class="universe-top"><span><span class="live-star" aria-hidden="true">✳</span> FIG. 01 <span class="universe-title">THE WORD MAP</span></span><span id="word-count">Loading words…</span></div>
+      <div id="sky" class="sky" aria-live="polite">
+        <svg id="connections" class="connections" aria-hidden="true"></svg>
+        <p class="loading">Gathering the words…</p>
+      </div>
+      <div class="universe-bottom"><span id="page-label">Every word has a place.</span><div class="pager"><button id="prev-page" type="button" aria-label="Previous constellation">←</button><button id="next-page" type="button" aria-label="Next constellation">→</button></div></div>
+    </section>
+
+    <footer><span>AFTERWORDS / AN OPEN COLLECTION</span><a id="source-link" href="#">VIEW THE SOURCE ↗</a></footer>
+  </main>
+  <dialog id="word-dialog" class="word-dialog"><form method="dialog"><button class="close" aria-label="Close">×</button><p class="dialog-kicker">A word left behind</p><h2 id="dialog-word"></h2><p id="dialog-date"></p></form></dialog>
+</body>
+</html>
