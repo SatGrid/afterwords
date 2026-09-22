@@ -32,6 +32,7 @@ jobs:
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: python scripts/add_word.py
       - name: Save new word
         if: github.event_name == 'issues'
