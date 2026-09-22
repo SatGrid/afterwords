@@ -9,6 +9,7 @@ const relationInput = document.querySelector('#relation-input');
 let words = [];
 let page = 0;
 const PAGE_SIZE = 24;
+const STORAGE_KEY = 'afterwords-local-words-v1';
 
 function repository() {
   const { hostname, pathname } = location;
@@ -22,6 +23,30 @@ function seeded(index) {
   let n = (index * 2654435761 + 1013904223) >>> 0;
   n ^= n >>> 16; n = Math.imul(n, 2246822507); n ^= n >>> 13;
   return (n >>> 0) / 4294967296;
+}
+
+function localWords() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalWords(items) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function refreshRelationOptions() {
+  relationInput.replaceChildren(new Option('Choose a word from the map', ''));
+  [...words].sort((a, b) => a.word.localeCompare(b.word)).forEach(item => relationInput.add(new Option(item.word, item.word)));
+  relationInput.disabled = false;
 }
 
 function layout(items) {
@@ -87,10 +112,10 @@ function draw() {
 fetch('words.json', {cache:'no-store'})
   .then(response => { if (!response.ok) throw new Error('Could not load words'); return response.json(); })
   .then(data => {
-    words = [...data].reverse();
-    relationInput.replaceChildren(new Option('Choose a word from the map', ''));
-    [...data].sort((a, b) => a.word.localeCompare(b.word)).forEach(item => relationInput.add(new Option(item.word, item.word)));
-    relationInput.disabled = false;
+    const drafts = localWords();
+    const seen = new Set(drafts.map(item => item.word.toLocaleLowerCase()));
+    words = [...drafts, ...[...data].reverse().filter(item => !seen.has(item.word.toLocaleLowerCase()))];
+    refreshRelationOptions();
     count.textContent = `${words.length} words left here`;
     draw();
   })
@@ -114,8 +139,24 @@ document.querySelector('#word-form').addEventListener('submit', event => {
   if (!/^\p{L}{2,18}$/u.test(word)) { note.textContent = 'Please enter one word of 2–18 letters.'; input.focus(); return; }
   if (!parent) { note.textContent = 'Choose an existing word to place yours beside.'; relationInput.focus(); return; }
   if (word.toLocaleLowerCase() === parent.toLocaleLowerCase()) { note.textContent = 'Choose a different word to place yours beside.'; relationInput.focus(); return; }
-  if (!repo) { note.textContent = 'Word submissions open once this site is published on GitHub Pages.'; return; }
-  const title = `Word: ${word}`;
-  const body = `I'd like to leave this word in the constellation: **${word}**\n\nBeside: **${parent}**\n\nPlease review and add the \`approved-word\` label if it fits.`;
-  window.open(`https://github.com/${repo}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`, '_blank', 'noopener,noreferrer');
+  if (words.some(item => item.word.toLocaleLowerCase() === word.toLocaleLowerCase())) {
+    note.textContent = 'That word is already on the map.';
+    input.focus();
+    return;
+  }
+  const item = {word: word.toLocaleLowerCase(), parent, date: new Date().toISOString().slice(0, 10), issue: null, local: true};
+  const drafts = [item, ...localWords()];
+  if (!saveLocalWords(drafts)) {
+    note.textContent = 'Your browser blocked local saving. Please allow site storage and try again.';
+    return;
+  }
+  words.unshift(item);
+  page = 0;
+  refreshRelationOptions();
+  count.textContent = `${words.length} words left here`;
+  draw();
+  input.value = '';
+  relationInput.value = '';
+  note.textContent = `“${item.word}” was added beside “${parent}”. It will stay on this device.`;
+  document.querySelector('.universe').scrollIntoView({behavior: 'smooth', block: 'start'});
 });

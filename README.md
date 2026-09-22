@@ -1,6 +1,6 @@
 # Afterwords
 
-A small shared universe made from one-word contributions. Visitors choose an existing word to place theirs beside, so every line on the map records a human-made relationship. The repository owner reviews each submission before it appears.
+A small word map made from one-word contributions. Visitors choose an existing word to place theirs beside, so every line records a human-made relationship. New words appear immediately and are stored in the visitor's browser.
 
 ## Publish it
 
@@ -10,7 +10,7 @@ A small shared universe made from one-word contributions. Visitors choose an exi
 4. Create an issue label called `approved-word`.
 5. Wait for the **Publish constellation** workflow to finish. The site URL appears in **Settings → Pages**.
 
-The site detects its GitHub repository from its Pages URL. A visitor's **Add to the map** button opens a prefilled GitHub issue containing the new word and its chosen relationship, so contributors need a GitHub account. Review the issue and apply `approved-word` to publish it. You can skip or close anything you don't want to display. If an approved word is already present, the workflow keeps the site unchanged.
+The site detects its GitHub repository from its Pages URL. **Add to the map** stores the contribution in browser storage and redraws the map immediately, without opening GitHub or requiring an account. Browser-stored words are personal to that device.
 
 The first nine words are examples. Replace them in `words.json` before publishing if you like. An example has `date` and `issue` set to `null`.
 
