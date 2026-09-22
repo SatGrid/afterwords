@@ -9,6 +9,8 @@ const relationInput = document.querySelector('#relation-input');
 const traceButton = document.querySelector('#trace-path');
 const clearTrace = document.querySelector('#clear-trace');
 const pager = document.querySelector('.pager');
+const findInput = document.querySelector('#find-input');
+const findNote = document.querySelector('#find-note');
 let words = [];
 let page = 0;
 let traceWord = null;
@@ -50,7 +52,12 @@ function saveLocalWords(items) {
 
 function refreshRelationOptions() {
   relationInput.replaceChildren(new Option('Choose a word from the map', ''));
-  [...words].sort((a, b) => a.word.localeCompare(b.word)).forEach(item => relationInput.add(new Option(item.word, item.word)));
+  const suggestions = document.querySelector('#word-suggestions');
+  suggestions.replaceChildren();
+  [...words].sort((a, b) => a.word.localeCompare(b.word)).forEach(item => {
+    relationInput.add(new Option(item.word, item.word));
+    suggestions.append(new Option(item.word, item.word));
+  });
   relationInput.disabled = false;
 }
 
@@ -113,6 +120,7 @@ function draw() {
     const button = document.createElement('button');
     button.className = `star-word${featured ? ' featured' : ''}`;
     button.type = 'button';
+    button.dataset.word = item.word.toLocaleLowerCase();
     button.textContent = item.word;
     button.style.left = `${x}px`; button.style.top = `${y}px`;
     button.addEventListener('click', () => {
@@ -148,6 +156,27 @@ fetch('words.json', {cache:'no-store'})
 
 prev.addEventListener('click', () => { page--; draw(); });
 next.addEventListener('click', () => { page++; draw(); });
+document.querySelector('#find-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const query = findInput.value.trim().toLocaleLowerCase();
+  if (!query) { findNote.textContent = 'Write a word to find.'; findInput.focus(); return; }
+  const match = words.find(item => item.word.toLocaleLowerCase() === query)
+    || words.find(item => item.word.toLocaleLowerCase().startsWith(query))
+    || words.find(item => item.word.toLocaleLowerCase().includes(query));
+  if (!match) { findNote.textContent = 'No word found yet.'; return; }
+  traceWord = null;
+  page = Math.floor(words.indexOf(match) / PAGE_SIZE);
+  draw();
+  let target = [...sky.querySelectorAll('.star-word')].find(button => button.dataset.word === match.word.toLocaleLowerCase());
+  if (!target) {
+    traceWord = match.word;
+    draw();
+    target = [...sky.querySelectorAll('.star-word')].find(button => button.dataset.word === match.word.toLocaleLowerCase());
+  }
+  findNote.textContent = `Found “${match.word}”.`;
+  document.querySelector('.universe').scrollIntoView({behavior: 'smooth', block: 'start'});
+  target?.click();
+});
 traceButton.addEventListener('click', () => {
   if (!selectedWord) return;
   traceWord = selectedWord.word;

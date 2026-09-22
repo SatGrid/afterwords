@@ -39,6 +39,13 @@
 
     <section class="universe" aria-label="Constellation of submitted words">
       <div class="universe-top"><span><span class="live-star" aria-hidden="true">✳</span> FIG. 01 <span class="universe-title">THE WORD MAP</span></span><span id="word-count">Loading words…</span></div>
+      <form id="find-form" class="find-form" role="search">
+        <label for="find-input">FIND A WORD</label>
+        <input id="find-input" type="search" list="word-suggestions" autocomplete="off" placeholder="Search the map" aria-describedby="find-note">
+        <datalist id="word-suggestions"></datalist>
+        <button type="submit">FIND ↗</button>
+        <span id="find-note" role="status"></span>
+      </form>
       <div id="sky" class="sky" aria-live="polite">
         <svg id="connections" class="connections" aria-hidden="true"></svg>
         <p class="loading">Gathering the words…</p>

@@ -143,6 +143,13 @@ h1 em { font-weight: 400; color: #a44431; }
 .live-star { font-size: 1rem; color: #a44431; }
 .universe-title { font-weight: 500; }
 #word-count { text-transform: uppercase; }
+.find-form { display: flex; align-items: center; gap: 12px; min-height: 57px; padding: 8px 18px; border-bottom: 1px solid #242925; font: .72rem 'DM Mono', Consolas, monospace; }
+.find-form label { flex: none; white-space: nowrap; }
+.find-form input { width: min(230px, 30vw); min-width: 0; height: 35px; border: 0; border-bottom: 1px solid #242925; border-radius: 0; padding: 0 6px; background: transparent; color: #242925; outline: 0; }
+.find-form input:focus { border-bottom: 2px solid #a44431; }
+.find-form button { align-self: stretch; border: 0; border-left: 1px solid #242925; padding: 0 16px; background: transparent; color: #a44431; font: 500 .72rem 'DM Mono', Consolas, monospace; }
+.find-form button:hover { background: #d8d1bd; }
+#find-note { margin-left: auto; color: #565a52; }
 
 .sky {
   position: relative;
@@ -260,6 +267,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid #a44431; outline-offs
   .relation-row select { width: 100%; }
   .universe-top, .universe-bottom { padding: 0 11px; font-size: .65rem; }
   .universe-top > span:first-child { gap: 6px; }
+  .find-form { flex-wrap: wrap; gap: 7px; padding: 10px 11px; }
+  .find-form label { width: 100%; }
+  .find-form input { flex: 1; width: auto; }
+  .find-form button { height: 35px; }
+  #find-note { width: 100%; }
+  #find-note:empty { display: none; }
   .sky { height: 520px; min-height: 0; }
   .sky:before { inset: 15px; }
   .star-word { font-size: .73rem; }

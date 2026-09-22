@@ -14,6 +14,8 @@ The site detects its GitHub repository from its Pages URL. **Add to the map** st
 
 Select a word to see its path back through the words it was placed beside. **Trace this path** shows that chain on the map; **Show all words** returns to the full collection.
 
+Use **Find a word** to search the whole collection, including words on other constellation pages. Matching words open with their path ready to explore.
+
 The first nine words are examples. Replace them in `words.json` before publishing if you like. An example has `date` and `issue` set to `null`.
 
 ## Local preview
