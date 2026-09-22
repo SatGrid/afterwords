@@ -6,8 +6,13 @@ const prev = document.querySelector('#prev-page');
 const next = document.querySelector('#next-page');
 const dialog = document.querySelector('#word-dialog');
 const relationInput = document.querySelector('#relation-input');
+const traceButton = document.querySelector('#trace-path');
+const clearTrace = document.querySelector('#clear-trace');
+const pager = document.querySelector('.pager');
 let words = [];
 let page = 0;
+let traceWord = null;
+let selectedWord = null;
 const PAGE_SIZE = 24;
 const STORAGE_KEY = 'afterwords-local-words-v1';
 
@@ -73,9 +78,23 @@ function layout(items) {
   }).filter(Boolean);
 }
 
+function trailFor(item) {
+  const byWord = new Map(words.map(entry => [entry.word.toLocaleLowerCase(), entry]));
+  const trail = [];
+  const seen = new Set();
+  let current = item;
+  while (current && !seen.has(current.word.toLocaleLowerCase())) {
+    trail.push(current);
+    seen.add(current.word.toLocaleLowerCase());
+    current = current.parent && byWord.get(current.parent.toLocaleLowerCase());
+  }
+  return trail;
+}
+
 function draw() {
   const totalPages = Math.max(1, Math.ceil(words.length / PAGE_SIZE));
-  const visible = words.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const traced = traceWord && words.find(item => item.word === traceWord);
+  const visible = traced ? trailFor(traced) : words.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   sky.querySelectorAll('.star-word,.loading').forEach(el => el.remove());
   svg.replaceChildren();
   const points = layout(visible);
@@ -97,14 +116,20 @@ function draw() {
     button.textContent = item.word;
     button.style.left = `${x}px`; button.style.top = `${y}px`;
     button.addEventListener('click', () => {
+      selectedWord = item;
+      const trail = trailFor(item);
       document.querySelector('#dialog-word').textContent = item.word;
       document.querySelector('#dialog-relation').textContent = item.parent ? `Placed beside ${item.parent}` : 'The first point on the map';
       document.querySelector('#dialog-date').textContent = item.date ? `Arrived ${new Date(`${item.date}T00:00:00`).toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'})}` : 'An opening word';
+      document.querySelector('#dialog-trail').textContent = trail.map(entry => entry.word).join(' → ');
+      traceButton.hidden = trail.length < 2;
       dialog.showModal();
     });
     sky.append(button);
   }
-  pageLabel.textContent = totalPages === 1 ? 'Every word has a place.' : `Constellation ${page + 1} of ${totalPages}`;
+  pageLabel.textContent = traced ? `PATH OF ${traced.word.toLocaleUpperCase()} / ${visible.length} WORDS` : totalPages === 1 ? 'Every word has a place.' : `Constellation ${page + 1} of ${totalPages}`;
+  pager.hidden = Boolean(traced);
+  clearTrace.hidden = !traced;
   prev.disabled = page === 0;
   next.disabled = page >= totalPages - 1;
 }
@@ -123,6 +148,14 @@ fetch('words.json', {cache:'no-store'})
 
 prev.addEventListener('click', () => { page--; draw(); });
 next.addEventListener('click', () => { page++; draw(); });
+traceButton.addEventListener('click', () => {
+  if (!selectedWord) return;
+  traceWord = selectedWord.word;
+  dialog.close();
+  draw();
+  document.querySelector('.universe').scrollIntoView({behavior: 'smooth', block: 'start'});
+});
+clearTrace.addEventListener('click', () => { traceWord = null; draw(); });
 window.addEventListener('resize', () => { if (words.length) draw(); });
 
 const repo = repository();
@@ -152,6 +185,7 @@ document.querySelector('#word-form').addEventListener('submit', event => {
   }
   words.unshift(item);
   page = 0;
+  traceWord = null;
   refreshRelationOptions();
   count.textContent = `${words.length} words left here`;
   draw();

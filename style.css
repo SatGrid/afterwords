@@ -195,6 +195,9 @@ h1 em { font-weight: 400; color: #a44431; }
 .pager button { width: 51px; border: 0; border-left: 1px solid #242925; background: transparent; color: #242925; font-size: 1.15rem; }
 .pager button:hover:not(:disabled) { background: #d8d1bd; }
 .pager button:disabled { opacity: .28; cursor: default; }
+.clear-trace { align-self: stretch; margin-left: auto; border: 0; border-left: 1px solid #242925; padding: 0 16px; background: transparent; color: #a44431; font: 500 .7rem 'DM Mono', Consolas, monospace; }
+.clear-trace:hover { background: #d8d1bd; }
+.pager[hidden], .clear-trace[hidden] { display: none; }
 
 footer {
   display: flex;
@@ -222,7 +225,12 @@ footer a:hover { color: #a44431; border-color: #a44431; }
 .dialog-kicker { margin: 0; font-size: .72rem; letter-spacing: .08em; }
 .word-dialog h2 { margin: 26px 0; color: #a44431; font: italic 400 2.6rem 'Libre Baskerville', Georgia, serif; }
 .dialog-relation { font: .77rem 'DM Mono', Consolas, monospace; text-transform: uppercase; letter-spacing: .04em; }
-.word-dialog p:last-child { margin-bottom: 0; color: #66695f; font-size: .85rem; }
+.dialog-date { color: #66695f; font-size: .85rem; }
+.trail-label { margin: 27px 0 8px; border-top: 1px solid #b8b4a8; padding-top: 18px; color: #66695f; font: .68rem 'DM Mono', Consolas, monospace; letter-spacing: .08em; }
+.dialog-trail { margin: 0; color: #242925; font: .8rem/1.7 'DM Mono', Consolas, monospace; overflow-wrap: anywhere; }
+.trace-path { margin-top: 24px; border: 1px solid #242925; padding: 12px 18px; background: #242925; color: #f1eddf; font: 500 .72rem 'DM Mono', Consolas, monospace; }
+.trace-path:hover { background: #a44431; border-color: #a44431; }
+.trace-path[hidden] { display: none; }
 a:focus-visible, button:focus-visible { outline: 2px solid #a44431; outline-offset: 3px; }
 
 @media (max-width: 950px) {

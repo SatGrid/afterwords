@@ -12,6 +12,8 @@ A small word map made from one-word contributions. Visitors choose an existing w
 
 The site detects its GitHub repository from its Pages URL. **Add to the map** stores the contribution in browser storage and redraws the map immediately, without opening GitHub or requiring an account. Browser-stored words are personal to that device.
 
+Select a word to see its path back through the words it was placed beside. **Trace this path** shows that chain on the map; **Show all words** returns to the full collection.
+
 The first nine words are examples. Replace them in `words.json` before publishing if you like. An example has `date` and `issue` set to `null`.
 
 ## Local preview

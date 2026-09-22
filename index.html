@@ -43,11 +43,11 @@
         <svg id="connections" class="connections" aria-hidden="true"></svg>
         <p class="loading">Gathering the words…</p>
       </div>
-      <div class="universe-bottom"><span id="page-label">Every word has a place.</span><div class="pager"><button id="prev-page" type="button" aria-label="Previous constellation">←</button><button id="next-page" type="button" aria-label="Next constellation">→</button></div></div>
+      <div class="universe-bottom"><span id="page-label">Every word has a place.</span><button id="clear-trace" class="clear-trace" type="button" hidden>SHOW ALL WORDS ↗</button><div class="pager"><button id="prev-page" type="button" aria-label="Previous constellation">←</button><button id="next-page" type="button" aria-label="Next constellation">→</button></div></div>
     </section>
 
     <footer><span>AFTERWORDS / AN OPEN COLLECTION</span><a id="source-link" href="#">VIEW THE SOURCE ↗</a></footer>
   </main>
-  <dialog id="word-dialog" class="word-dialog"><form method="dialog"><button class="close" aria-label="Close">×</button><p class="dialog-kicker">A word left behind</p><h2 id="dialog-word"></h2><p id="dialog-relation" class="dialog-relation"></p><p id="dialog-date"></p></form></dialog>
+  <dialog id="word-dialog" class="word-dialog"><form method="dialog"><button class="close" aria-label="Close">×</button><p class="dialog-kicker">A word left behind</p><h2 id="dialog-word"></h2><p id="dialog-relation" class="dialog-relation"></p><p id="dialog-date" class="dialog-date"></p><p class="trail-label">THE PATH BACK</p><p id="dialog-trail" class="dialog-trail"></p><button id="trace-path" class="trace-path" type="button" hidden>TRACE THIS PATH ↗</button></form></dialog>
 </body>
 </html>
