@@ -1,11 +1,11 @@
 [
-  {"word":"wonder","date":null,"issue":null},
-  {"word":"home","date":null,"issue":null},
-  {"word":"perhaps","date":null,"issue":null},
-  {"word":"tomorrow","date":null,"issue":null},
-  {"word":"tenderness","date":null,"issue":null},
-  {"word":"again","date":null,"issue":null},
-  {"word":"quiet","date":null,"issue":null},
-  {"word":"belong","date":null,"issue":null},
-  {"word":"somewhere","date":null,"issue":null}
+  {"word":"wonder","parent":null,"date":null,"issue":null},
+  {"word":"home","parent":"wonder","date":null,"issue":null},
+  {"word":"perhaps","parent":"wonder","date":null,"issue":null},
+  {"word":"tomorrow","parent":"perhaps","date":null,"issue":null},
+  {"word":"tenderness","parent":"home","date":null,"issue":null},
+  {"word":"again","parent":"tomorrow","date":null,"issue":null},
+  {"word":"quiet","parent":"home","date":null,"issue":null},
+  {"word":"belong","parent":"tenderness","date":null,"issue":null},
+  {"word":"somewhere","parent":"belong","date":null,"issue":null}
 ]

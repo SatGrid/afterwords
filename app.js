@@ -5,6 +5,7 @@ const pageLabel = document.querySelector('#page-label');
 const prev = document.querySelector('#prev-page');
 const next = document.querySelector('#next-page');
 const dialog = document.querySelector('#word-dialog');
+const relationInput = document.querySelector('#relation-input');
 let words = [];
 let page = 0;
 const PAGE_SIZE = 24;
@@ -53,16 +54,14 @@ function draw() {
   sky.querySelectorAll('.star-word,.loading').forEach(el => el.remove());
   svg.replaceChildren();
   const points = layout(visible);
-  for (let i = 1; i < points.length; i++) {
-    const a = points[i];
-    const nearest = points.slice(0, i).reduce((best, point) => {
-      const d = Math.hypot(a.x - point.x, a.y - point.y);
-      return !best || d < best.d ? {point, d} : best;
-    }, null);
-    if (nearest && nearest.d < sky.clientWidth * .5) {
+  const pointByWord = new Map(points.map(point => [point.item.word.toLocaleLowerCase(), point]));
+  for (const point of points) {
+    const parent = point.item.parent && pointByWord.get(point.item.parent.toLocaleLowerCase());
+    if (parent) {
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
-      line.setAttribute('x2', nearest.point.x); line.setAttribute('y2', nearest.point.y);
+      line.classList.add('chosen-link');
+      line.setAttribute('x1', point.x); line.setAttribute('y1', point.y);
+      line.setAttribute('x2', parent.x); line.setAttribute('y2', parent.y);
       svg.append(line);
     }
   }
@@ -74,6 +73,7 @@ function draw() {
     button.style.left = `${x}px`; button.style.top = `${y}px`;
     button.addEventListener('click', () => {
       document.querySelector('#dialog-word').textContent = item.word;
+      document.querySelector('#dialog-relation').textContent = item.parent ? `Placed beside ${item.parent}` : 'The first point on the map';
       document.querySelector('#dialog-date').textContent = item.date ? `Arrived ${new Date(`${item.date}T00:00:00`).toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'})}` : 'An opening word';
       dialog.showModal();
     });
@@ -86,7 +86,14 @@ function draw() {
 
 fetch('words.json', {cache:'no-store'})
   .then(response => { if (!response.ok) throw new Error('Could not load words'); return response.json(); })
-  .then(data => { words = [...data].reverse(); count.textContent = `${words.length} words left here`; draw(); })
+  .then(data => {
+    words = [...data].reverse();
+    relationInput.replaceChildren(new Option('Choose a word from the map', ''));
+    [...data].sort((a, b) => a.word.localeCompare(b.word)).forEach(item => relationInput.add(new Option(item.word, item.word)));
+    relationInput.disabled = false;
+    count.textContent = `${words.length} words left here`;
+    draw();
+  })
   .catch(() => { sky.querySelector('.loading').textContent = 'The words could not be loaded. Please try again later.'; count.textContent = 'Unavailable'; });
 
 prev.addEventListener('click', () => { page--; draw(); });
@@ -102,10 +109,13 @@ document.querySelector('#word-form').addEventListener('submit', event => {
   event.preventDefault();
   const input = document.querySelector('#word-input');
   const word = input.value.trim();
+  const parent = relationInput.value;
   const note = document.querySelector('#word-note');
   if (!/^\p{L}{2,18}$/u.test(word)) { note.textContent = 'Please enter one word of 2–18 letters.'; input.focus(); return; }
+  if (!parent) { note.textContent = 'Choose an existing word to place yours beside.'; relationInput.focus(); return; }
+  if (word.toLocaleLowerCase() === parent.toLocaleLowerCase()) { note.textContent = 'Choose a different word to place yours beside.'; relationInput.focus(); return; }
   if (!repo) { note.textContent = 'Word submissions open once this site is published on GitHub Pages.'; return; }
   const title = `Word: ${word}`;
-  const body = `I'd like to leave this word in the constellation: **${word}**\n\nPlease review and add the \`approved-word\` label if it fits.`;
+  const body = `I'd like to leave this word in the constellation: **${word}**\n\nBeside: **${parent}**\n\nPlease review and add the \`approved-word\` label if it fits.`;
   window.open(`https://github.com/${repo}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`, '_blank', 'noopener,noreferrer');
 });

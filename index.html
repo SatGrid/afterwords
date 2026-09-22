@@ -27,6 +27,12 @@
           <input id="word-input" name="word" type="text" minlength="2" maxlength="18" pattern="[^\s]+" autocomplete="off" placeholder="Your word here" required aria-describedby="word-note">
           <button type="submit">ADD TO THE MAP <span aria-hidden="true">↗</span></button>
         </div>
+        <div class="relation-row">
+          <label for="relation-input">02 / PLACE IT BESIDE</label>
+          <select id="relation-input" name="relation" required disabled>
+            <option value="">Choose a word from the map</option>
+          </select>
+        </div>
         <p id="word-note" class="input-note">One word, 2–18 letters. You’ll finish on GitHub; words appear after approval.</p>
       </form>
     </section>
@@ -42,6 +48,6 @@
 
     <footer><span>AFTERWORDS / AN OPEN COLLECTION</span><a id="source-link" href="#">VIEW THE SOURCE ↗</a></footer>
   </main>
-  <dialog id="word-dialog" class="word-dialog"><form method="dialog"><button class="close" aria-label="Close">×</button><p class="dialog-kicker">A word left behind</p><h2 id="dialog-word"></h2><p id="dialog-date"></p></form></dialog>
+  <dialog id="word-dialog" class="word-dialog"><form method="dialog"><button class="close" aria-label="Close">×</button><p class="dialog-kicker">A word left behind</p><h2 id="dialog-word"></h2><p id="dialog-relation" class="dialog-relation"></p><p id="dialog-date"></p></form></dialog>
 </body>
 </html>
